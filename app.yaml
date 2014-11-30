@@ -1,13 +1,18 @@
-application: your-app-id
+application: western-octagon-780
 version: 1
 runtime: python27
 api_version: 1
 threadsafe: true
 
+handlers:
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /.*
+  script: guestbook.application
+
 libraries:
 - name: webapp2
   version: latest
-
-handlers:
-- url: /.*
-  script: guestbook.application
+- name: jinja2
+  version: latest
