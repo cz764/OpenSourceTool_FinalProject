@@ -35,7 +35,7 @@ class MainPage(webapp2.RequestHandler):
     
 # [END main_page]
 
-# [START BootStrp_page]
+# [START askquestion_page]
 class AskQuestion(webapp2.RequestHandler):
     def get(self):
         greetings = "rendered by Jane without BootStrap"
@@ -54,11 +54,32 @@ class AskQuestion(webapp2.RequestHandler):
 
         template = JINJA_ENVIRONMENT.get_template('ask.html',parent='layout.html')
         self.response.write(template.render(template_values))    
-# [END BootStrap_page]
+# [END askquestion_page]
+
+# [START question_list]
+class QuestionList(webapp2.RequestHandler):
+    def get(self):
+        greetings = "rendered by Jane with bootstrap"
+        if users.get_current_user():
+            url = users.create_logout_url(self.request.uri)
+            url_linktext = 'Logout'
+        else:
+            url = users.create_login_url(self.request.uri)
+            url_linktext = 'Login'
+        template_values = {
+            'jane': greetings,
+            'url': url,
+            'url_linktext': url_linktext,
+        }
+        template = JINJA_ENVIRONMENT.get_template('layout.html')
+        self.response.write(template.render(template_values))
+    
+# [END question_list]
 
 
 application = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/index', MainPage),
     ('/ask', AskQuestion),
+    ('/list', QuestionList),
 ], debug=True)

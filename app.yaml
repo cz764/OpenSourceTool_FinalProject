@@ -1,4 +1,4 @@
-application: western-octagon-780
+application: chenzhuost
 version: 1
 runtime: python27
 api_version: 1
@@ -12,6 +12,9 @@ handlers:
   script: jane.application
 
 - url: /ask/.*
+  script: jane.application
+
+- url: /list/.*
   script: jane.application
 
 - url: /.*
