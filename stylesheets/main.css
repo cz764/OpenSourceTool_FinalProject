@@ -13,3 +13,7 @@ body {
 .important { 
 	color: purple; 
 }
+
+.col-lg-6 {
+	width: 100%;
+}
