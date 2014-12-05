@@ -8,8 +8,14 @@ handlers:
 - url: /stylesheets
   static_dir: stylesheets
 
+- url: /index
+  script: jane.application
+
+- url: /ask/.*
+  script: jane.application
+
 - url: /.*
-  script: guestbook.application
+  script: jane.application
 
 libraries:
 - name: webapp2

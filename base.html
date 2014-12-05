@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    {% block head %}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <title>{% block title %}Home{% endblock %} - OST Final Project</title>
+    {% endblock %}
+</head>
+<body>
+<div class="container">
+    <div id="content" class="center">{% block content %}{% endblock %}</div>
+    <div id="footer" class="center">
+        {% block footer %}
+        <p>&copy; Copyright 2013 by <a href="">Jane</a>.</p>
+        <p><a href="{{ url|safe }}">{{ url_linktext }}</a></p>
+        {% endblock %}
+    </div>
+</div>
+</body>

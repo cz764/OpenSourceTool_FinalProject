@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% block head %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>{% block title %}Home{% endblock %} - OST Final Project</title>
+  
+  <!-- Bootstrap core CSS -->
+  <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+  <!-- User custome style for -->
+  <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+{% endblock %}
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <nav>
+      <ul class="nav nav-pills pull-right">
+        <li role="presentation" class="active"><a href="/">Home</a></li>
+        <li role="presentation"><a href="/ask">Ask a Question</a></li>
+        <li role="presentation"><a href="{{ url|safe }}">{{ url_linktext }}</a></li>
+      </ul>
+    </nav>
+    <h3 class="text-muted">OST Final Project</h3>
+  </div>
+  <div class="content">
+  {% block content %}
+    <div class="jumbotron">
+      <h1>Quora for NYU</h1>
+      <p class="lead">Welcome to Jane's OST Forum, You can either log in or take a look at the full Question List! Enjoy.</p>
+      <p><a class="btn btn-lg btn-success" href="#" role="button">Question List</a></p>
+    </div>
+
+    <div class="row marketing">
+      <p>{{jane}}</p>
+      <div class="col-lg-6">
+        <h3>Top Rated Questions</h3>
+        <h4>Q1: What do you think of Open Source Tool</h4>
+        <p>It's awesome</p>
+        <h4>Q2: What's the weather like today?</h4>
+        <p>It's awesome</p>
+      </div>
+    </div>
+  {% endblock %}
+  </div>
+  <div class="footer">
+  {% block footer %}
+      <footer>
+        <p>&copy; Copyright - Chen Zhu - 2014</p>
+      </footer>
+  {% endblock %}
+  </div>
+</div> <!-- /container -->
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
