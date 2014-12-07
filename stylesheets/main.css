@@ -17,3 +17,7 @@ body {
 .col-lg-6 {
 	width: 100%;
 }
+
+#exampleInputContent {
+	height: 10em;
+}

@@ -5,4 +5,4 @@ vangie's
 https://github.com/valsharea/thesmallthings/tree/master/OST_blog
 
 vagrant forwarding port running test:
-~/google_appengine/dev_appserver.py --port=8080 --host=0.0.0.0  OpenSourceTool_FinalProject/
+~/google_appengine/dev_appserver.py --port=8080 --host=0.0.0.0  OpenSourceTool_FinalProject/ &

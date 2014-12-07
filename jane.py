@@ -53,7 +53,10 @@ class AskQuestion(webapp2.RequestHandler):
         }
 
         template = JINJA_ENVIRONMENT.get_template('ask.html',parent='layout.html')
-        self.response.write(template.render(template_values))    
+        self.response.write(template.render(template_values))
+    def post(self):
+        # create a new question collection and store them into database
+        
 # [END askquestion_page]
 
 # [START question_list]
@@ -73,7 +76,7 @@ class QuestionList(webapp2.RequestHandler):
         }
         template = JINJA_ENVIRONMENT.get_template('layout.html')
         self.response.write(template.render(template_values))
-    
+    def post(self):
 # [END question_list]
 
 
