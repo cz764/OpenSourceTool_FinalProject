@@ -33,7 +33,7 @@
       <ul class="nav nav-pills pull-right">
         <li role="presentation" class="active"><a href="/">Home</a></li>
         <li role="presentation"><a href="/ask">Ask a Question</a></li>
-        <li role="presentation"><a href="{{ url|safe }}">{{ url_linktext }}</a></li>
+        <li role="presentation"><a href="{{ url|safe }}" id="url_linktext">{{ url_linktext }}</a></li>
       </ul>
     </nav>
     <h3 class="text-muted">OST Final Project</h3>
@@ -48,6 +48,8 @@
 
     <div class="row marketing">
       <div class="col-lg-6">
+      <p>is user loged in? {{ isLogin }}</p>
+      <p>jane {{ jane }}</p>
         <h3>Top Rated Questions</h3>
         <h4>Q1: What do you think of Open Source Tool</h4>
         <p>It's awesome</p>
