@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}Ask{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+	{% for question in questions %}
+	<div class="q1">
+		<h2>Title: {{ question.title }}</h2>
+	<li><label>id:</label> {{ question.key.id() }}</li>
+    <li><label>Content:</label> {{ question.content }}</li>
+    <li><label>Date:</label> {{ question.date_edit }}</li>
+	</div>
+	{% endfor %}
+
+  {{ jane }}
+  
+{% endblock %}

@@ -1,3 +1,4 @@
+# This is equivalent to main.py
 # [START imports]
 import os
 import urllib
@@ -5,19 +6,18 @@ import urllib
 from google.appengine.api import users
 from google.appengine.ext import ndb
 
+from models import *        # custom models
+
 import jinja2
 import webapp2
+import time
 
 
 JINJA_ENVIRONMENT = jinja2.Environment(
-    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
+    loader=jinja2.FileSystemLoader(os.path.dirname(os.path.abspath(__file__)) + '/view/'),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 # [END imports]
-
-def uniqid():
-    from time import time
-    return hex(int(time()*10))[2:]
 
 def getLoginTemplateStatus(self, users):
     if users.get_current_user():
@@ -35,23 +35,15 @@ def getLoginTemplateStatus(self, users):
     }
     return template_values
 
-class Collection(ndb.Model):
-    qid = ndb.StringProperty(indexed=True)
-    content = ndb.StringProperty(indexed=False)
-    user = ndb.UserProperty()
-    date_created = ndb.DateTimeProperty(auto_now_add=True)
-    date_updated = ndb.DateTimeProperty(auto_now=True)
-    tags = ndb.StringProperty(repeated=True)
-    vote_up = ndb.IntegerProperty()
-    vote_down = ndb.IntegerProperty()
-    vote = ndb.ComputedProperty(lambda self: self.vote_up - self.vote_down)
-    answers = ndb.JsonProperty(repeated=True)       # stores a list of answer json
-
-
 # [START main_page]
 class MainPage(webapp2.RequestHandler):
     def get(self):
+        questions_query = Question.query().order(-Question.date_edit)
+        questions = questions_query.fetch(2)
+
         template_values = getLoginTemplateStatus(self, users)
+        template_values["questions"] = questions
+
         template = JINJA_ENVIRONMENT.get_template('layout.html')
         self.response.write(template.render(template_values))
     
@@ -63,20 +55,30 @@ class AskQuestion(webapp2.RequestHandler):
         template_values = getLoginTemplateStatus(self, users)
         template = JINJA_ENVIRONMENT.get_template('ask.html',parent='layout.html')
         self.response.write(template.render(template_values))
-    def post(self):
-        template_values = getLoginTemplateStatus(self, users)
-        template_values["jane"] = "post method submitted"
-        template = JINJA_ENVIRONMENT.get_template('ask.html',parent='layout.html')
-        self.response.write(template.render(template_values))
-        # create a new question collection and store them into database
+    def post(self): # create a new question collection and store them into database
+        question = Question()
+        if users.get_current_user():
+            question.author = users.get_current_user()
+
+        question.content = self.request.get('content')
+        question.title = self.request.get('title')
+
+        question.put()
+        time.sleep(0.1)
+        self.redirect('/list')
 
 # [END askquestion_page]
 
 # [START question_list]
 class QuestionList(webapp2.RequestHandler):
     def get(self):
+        questions_query = Question.query().order(-Question.date_edit)
+        questions = questions_query.fetch()
+
         template_values = getLoginTemplateStatus(self, users)
-        template = JINJA_ENVIRONMENT.get_template('layout.html')
+
+        template_values["questions"] = questions
+        template = JINJA_ENVIRONMENT.get_template('list.html', parent='layout.html')
         self.response.write(template.render(template_values))
 
 # [END question_list]

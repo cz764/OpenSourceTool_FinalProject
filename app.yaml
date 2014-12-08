@@ -17,6 +17,12 @@ handlers:
 - url: /list/.*
   script: jane.application
 
+- url: /manage
+  script: manage.application
+
+- url: /manage/.*
+  script: manage.application
+
 - url: /.*
   script: jane.application
 
