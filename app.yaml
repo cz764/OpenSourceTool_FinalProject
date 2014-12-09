@@ -23,6 +23,11 @@ handlers:
 - url: /manage/.*
   script: manage.application
 
+- url: /view?.*
+  script: view.application
+
+
+
 - url: /.*
   script: jane.application
 

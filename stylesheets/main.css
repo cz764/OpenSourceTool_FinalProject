@@ -21,3 +21,17 @@ body {
 #exampleInputContent {
 	height: 10em;
 }
+
+.preview_answer {
+	clear: both;
+	padding: 3px;
+	border: 2px dotted #ccc;
+	font-size: 107%;
+	line-height: 130%;
+	width: 660px;
+	word-wrap: break-word;
+}
+
+.editYourContent {
+	height: 10em;
+}

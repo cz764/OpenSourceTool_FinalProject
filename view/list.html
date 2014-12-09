@@ -6,13 +6,12 @@
 {% block content %}
 	{% for question in questions %}
 	<div class="q1">
-		<h2>Title: {{ question.title }}</h2>
-	<li><label>id:</label> {{ question.key.id() }}</li>
+		<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2>
+	
     <li><label>Content:</label> {{ question.content }}</li>
-    <li><label>Date:</label> {{ question.date_edit }}</li>
+    
 	</div>
 	{% endfor %}
 
-  {{ jane }}
   
 {% endblock %}

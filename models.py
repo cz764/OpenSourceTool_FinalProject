@@ -21,7 +21,8 @@ class Question(ndb.Model):
 class Answer(ndb.Model):
     author = ndb.UserProperty()
     content = ndb.StringProperty(indexed=False)
-    data = ndb.DateTimeProperty(auto_now_add=True)
+    date_create = ndb.DateTimeProperty(auto_now_add=True)
+    date_edit = ndb.DateTimeProperty(auto_now=True)
     up = ndb.IntegerProperty()
     down = ndb.IntegerProperty()
 
