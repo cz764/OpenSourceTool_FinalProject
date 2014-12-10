@@ -2,18 +2,42 @@
 {% block title %}Ask{% endblock %}
 {% block head %}
     {{ super() }}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        var loginStatus = $("#isLogin").val()
+        $("form").submit(function(event){
+            if (loginStatus === "False") {
+              var link = $("#url_linktext").attr('href');
+              alert("Please login first.");
+              event.preventDefault();
+              window.location.href = link;
+            }
+        });
+    });
+    </script>
 {% endblock %}
 {% block content %}	
 	<div class="question">
 		<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2>
-		<hr>	
-    	<label>Vote:1</label> {{ question.content }}
-    	{% for tag in question.tags %}<label>{{ tag }}</label> {% endfor %}
+		<hr>
+		<div class="vote">
+		<a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+    	<label>{{ question.vote }}</label> 
+    	<a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+    	</div>
+    	<div class="content">{{ question.content }}</div>
+    	<div class="tags">{% for tag in question.tags %}<label>{{ tag }}</label> {% endfor %}</div>
 	</div>
 	<hr>
 	<div class="answers">
 		{% for answer in answers %}
-		<p class="answerContent">{{ answer.content }}</p>
+		<div class="vote">
+		<a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+    	<label>{{ answer.vote }}</label> 
+    	<a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+    	</div>
+		<div class="content"><p class="answerContent">{{ answer.content }}</p></div>
 		<p><span>{{ answer.date_edit }}</span></p>
 		{% if user == answer.author %}
 			<button type="button" class="btn btn-default">
@@ -25,7 +49,7 @@
 	</div>
 	<hr>
 	<div class="add_answer">
-		<h3>Your Answer</h3>
+	<h3>Your Answer</h3>
 	<form action="/answer?qid={{ question.key.id() }}" method="POST">
 		<div class="form-group">
     	<textarea class="form-control" name="content" rows="8" placeholder="Answer content"></textarea>

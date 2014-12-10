@@ -51,7 +51,7 @@
     <div class="row marketing">
       <div class="col-lg-6">
         {% for question in questions %}
-        <h3>Title: {{ question.title }}</h3>
+        <h3><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h3>  
         <li><label>Content:</label> {{ question.content }}</li>
         <li><label>Date:</label> {{ question.date_edit }}</li>
         {% endfor %}
