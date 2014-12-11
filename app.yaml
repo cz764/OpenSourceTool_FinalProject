@@ -29,6 +29,12 @@ handlers:
 - url: /answer?.*
   script: view.application
 
+- url: /vote/up?.*
+  script: vote.application
+
+- url: /vote/down?.*
+  script: vote.application
+
 - url: /.*
   script: jane.application
 

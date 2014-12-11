@@ -21,10 +21,11 @@
 	<div class="question">
 		<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2>
 		<hr>
-		<div class="vote">
-		<a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+		<form action="/vote/up?qid={{ question.key.id() }}" method="POST">
+			<input type="submit" class="btn btn-default" value="Up"></form>
     	<label>{{ question.vote }}</label> 
-    	<a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+    	<form action="/vote/down?qid={{ question.key.id() }}" method="POST">
+			<input type="submit" class="btn btn-default" value="Down"></form>
     	</div>
     	<div class="content">{{ question.content }}</div>
     	<div class="tags">{% for tag in question.tags %}<label>{{ tag }}</label> {% endfor %}</div>
@@ -33,9 +34,11 @@
 	<div class="answers">
 		{% for answer in answers %}
 		<div class="vote">
-		<a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+		<form action="/vote/up?qid={{ question.key.id() }}&aid={{ answer.key.id() }}" method="POST">
+			<input type="submit" class="btn btn-default" value="Up"></form>
     	<label>{{ answer.vote }}</label> 
-    	<a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+    	<form action="/vote/down?qid={{ question.key.id() }}&aid={{ answer.key.id() }}" method="POST">
+    		<input type="submit" class="btn btn-default" value="Down"></form>
     	</div>
 		<div class="content"><p class="answerContent">{{ answer.content }}</p></div>
 		<p><span>{{ answer.date_edit }}</span></p>

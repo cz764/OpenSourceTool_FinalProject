@@ -42,6 +42,7 @@ class ViewQuestion(webapp2.RequestHandler):
     
 # [END view_question]
 
+# [START answer_question]
 class AnswerQuestion(webapp2.RequestHandler):
     def get(self):
         qid = self.request.get('qid')
@@ -61,7 +62,7 @@ class AnswerQuestion(webapp2.RequestHandler):
         query_params = {'qid': qid}
         self.redirect('/view?' + urllib.urlencode(query_params))
     
-# [END view_question]
+# [END answer_question]
 
 application = webapp2.WSGIApplication([
     ('/view', ViewQuestion),
