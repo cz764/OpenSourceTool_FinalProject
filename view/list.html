@@ -4,14 +4,11 @@
     {{ super() }}
 {% endblock %}
 {% block content %}
+	<h1>Questions: <h1>
 	{% for question in questions %}
 	<div class="q1">
-		<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2>
-	
-    <li><label>Content:</label> {{ question.content }}</li>
-    
+		<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2>	
+    	<p class="description"> {{ question.content }}</p>    
 	</div>
-	{% endfor %}
-
-  
+	{% endfor %} 
 {% endblock %}

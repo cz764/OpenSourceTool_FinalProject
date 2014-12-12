@@ -50,11 +50,11 @@ class VoteUp(webapp2.RequestHandler):
         
         time.sleep(0.1)
 
-        # query_params = {'qid': qid}
-        # self.redirect('/view?' + urllib.urlencode(query_params))
+        query_params = {'qid': qid}
+        self.redirect('/view?' + urllib.urlencode(query_params))
     
-    	self.response.headers['Content-Type'] = 'text/plain'
-    	self.response.write('Vote Up completed!')
+    	# self.response.headers['Content-Type'] = 'text/plain'
+    	# self.response.write('Vote Up completed!')
 # [END view_question]
 
 
@@ -65,21 +65,33 @@ class VoteDown(webapp2.RequestHandler):
         query_params = {'qid': qid}
         self.redirect('/view?' + urllib.urlencode(query_params))    
     def post(self):
-        # qid = self.request.get('qid')
-        # question_key = ndb.Key('Question', int(qid))
-        # answer = Answer(parent=question_key)
-        # if users.get_current_user():
-        #     answer.author = users.get_current_user()
-        # answer.content = self.request.get('content')
+        qid = self.request.get('qid')
+        aid = self.request.get('aid')
+        user = users.get_current_user().nickname()
+        query_params = {'qid': qid}
+        if aid:
+            answer = answer_key(qid, aid).get()
+            if answer:
+                if user in answer.downs:
+                    self.redirect('/view?' + urllib.urlencode(query_params))
+                else:
+                    answer.downs.append(user)
+                    answer.put()
+            else:
+                self.response.headers['Content-Type'] = 'text/plain'
+                self.response.write('cannot find answer!')
+        else:
+            question = question_key(qid).get()
+            if user in question.downs:
+                self.redirect('/view?' + urllib.urlencode(query_params))
+            else:
+                question.downs.append(user)
+                question.put()
+        
+        time.sleep(0.1)
 
-        # answer.put()
-        # time.sleep(0.1)
-
-        # query_params = {'qid': qid}
-        # self.redirect('/view?' + urllib.urlencode(query_params))
-
-        self.response.headers['Content-Type'] = 'text/plain'
-        self.response.write('Vote Down!')
+        query_params = {'qid': qid}
+        self.redirect('/view?' + urllib.urlencode(query_params))
     
 # [END vote_down]
 

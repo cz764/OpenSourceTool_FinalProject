@@ -26,11 +26,7 @@ class ViewQuestion(webapp2.RequestHandler):
     	qid = self.request.get('qid')
     	question_key = ndb.Key('Question', int(qid))
     	question = question_key.get()
-    	answers = Answer.query(ancestor=question_key).order(-Answer.vote)
-
-        questions_query = Question.query().order(-Question.date_edit)
-        questions = questions_query.fetch(2)
-        answers = Answer.query().fetch()
+    	answers = Answer.query(ancestor=question_key).order(-Answer.vote).fetch()
 
         template_values = getLoginTemplateStatus(self, users)
         template_values["question"] = question

@@ -8,10 +8,13 @@
         var loginStatus = $("#isLogin").val()
         $("form").submit(function(event){
             if (loginStatus === "False") {
-              var link = $("#url_linktext").attr('href');
-              alert("Please login first.");
-              event.preventDefault();
-              window.location.href = link;
+                var link = $("#url_linktext").attr('href');
+                alert("Please login first.");
+                event.preventDefault();
+                window.location.href = link;
+            } else if ($("input:text").val() == '') { 
+                alert("input cannot be empty");
+                event.preventDefault();
             }
         });
     });
