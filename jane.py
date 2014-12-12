@@ -75,6 +75,7 @@ class QuestionList(webapp2.RequestHandler):
         questions_query = Question.query().order(-Question.date_edit)
         questions = questions_query.fetch()
 
+        print "!!!!!!length of questions is %s" % (questions[0].author)
         template_values = getLoginTemplateStatus(self, users)
 
         template_values["questions"] = questions
