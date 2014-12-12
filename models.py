@@ -6,9 +6,9 @@ def question_key(qid):
     """Constructs a Datastore key for a Question entity with question_id."""
     return ndb.Key('Question', int(qid))
 
-def answer_key(aid):
+def answer_key(qid, aid):
     """Constructs a Datastore key for a Question entity with question_id."""
-    return ndb.Key('Answer', int(aid))
+    return ndb.Key('Answer', int(aid), parent=ndb.Key('Question', int(qid)))
 
 class Question(ndb.Model):
     author = ndb.UserProperty()

@@ -30,7 +30,7 @@ class VoteUp(webapp2.RequestHandler):
         user = users.get_current_user().nickname()
         query_params = {'qid': qid}
         if aid:
-        	answer = answer_key(aid).get()
+        	answer = answer_key(qid, aid).get()
         	if answer:
 	        	if user in answer.ups:
 	        		self.redirect('/view?' + urllib.urlencode(query_params))
@@ -53,8 +53,8 @@ class VoteUp(webapp2.RequestHandler):
         # query_params = {'qid': qid}
         # self.redirect('/view?' + urllib.urlencode(query_params))
     
-    	# self.response.headers['Content-Type'] = 'text/plain'
-    	# self.response.write('Vote Up completed!')
+    	self.response.headers['Content-Type'] = 'text/plain'
+    	self.response.write('Vote Up completed!')
 # [END view_question]
 
 
