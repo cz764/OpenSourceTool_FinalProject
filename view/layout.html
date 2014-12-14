@@ -43,7 +43,7 @@
   <input type="hidden" id="isLogin" value="{{ isLogin }}">
   {% block content %}
     <div class="jumbotron">
-      <h1>Quora for NYU</h1>
+      <h1>OST Forum</h1>
       <p class="lead">Welcome to Jane's OST Forum! You can login, ask questions, answer questions, and take a look at the full Question List! Enjoy.</p>
       <p><a class="btn btn-lg btn-success" href="/list" role="button">Question List</a></p>
     </div>
@@ -52,8 +52,8 @@
       <div class="col-lg-6">
         {% for question in questions %}
         <h3><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h3>  
-        <li><label>Content:</label> {{ question.content }}</li>
-        <li><label>Date:</label> {{ question.date_edit }}</li>
+        <p class="description">{{ question.content | truncate(200, true, '...') }}</p>
+        <label>Date:</label> {{ question.date_edit }}
         {% endfor %}
       </div>
     </div>

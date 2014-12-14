@@ -5,6 +5,7 @@ import urllib
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
+from google.appengine.datastore.datastore_query import Cursor
 
 from models import *        # custom models
 
@@ -12,12 +13,13 @@ import jinja2
 import webapp2
 import time
 
-
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(os.path.abspath(__file__)) + '/view/'),
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 # [END imports]
+
+pagesize = 2
 
 def getLoginTemplateStatus(self, users):
     if users.get_current_user():
@@ -34,6 +36,26 @@ def getLoginTemplateStatus(self, users):
         'url_linktext': url_linktext,
     }
     return template_values
+
+def getQuestionList(self, manageUser):
+    curs = Cursor(urlsafe=self.request.get('cursor'))
+    if manageUser:
+        questions, next_curs, more = Question.query(
+            Question.author == users.get_current_user()).order(
+            -Question.date_edit).fetch_page(pagesize, start_cursor=curs)
+    else:
+        questions, next_curs, more = Question.query().order(
+            -Question.date_edit).fetch_page(pagesize, start_cursor=curs)   
+
+    print "!!!!!!length of questions is %s" % len(questions)
+    template_values = getLoginTemplateStatus(self, users)
+
+    if more and next_curs:
+        template_values["next_curs"] = next_curs.urlsafe()
+    
+    template_values["questions"] = questions
+    return template_values
+
 
 # [START main_page]
 class MainPage(webapp2.RequestHandler):
@@ -72,13 +94,7 @@ class AskQuestion(webapp2.RequestHandler):
 # [START question_list]
 class QuestionList(webapp2.RequestHandler):
     def get(self):
-        questions_query = Question.query().order(-Question.date_edit)
-        questions = questions_query.fetch()
-
-        print "!!!!!!length of questions is %s" % (questions[0].author)
-        template_values = getLoginTemplateStatus(self, users)
-
-        template_values["questions"] = questions
+        template_values = getQuestionList(self, False)
         template = JINJA_ENVIRONMENT.get_template('list.html', parent='layout.html')
         self.response.write(template.render(template_values))
 

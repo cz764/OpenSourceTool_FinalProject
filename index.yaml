@@ -21,3 +21,9 @@ indexes:
   properties:
   - name: date
     direction: desc
+
+- kind: Question
+  properties:
+  - name: author
+  - name: date_edit
+    direction: desc

@@ -31,10 +31,4 @@ class Answer(ndb.Model):
     vote = ndb.ComputedProperty(lambda self: len(self.ups) - len(self.downs))
 
 
-class Vote(ndb.Model):
-    users = ndb.JsonProperty(repeated=True)     # stores the json list for voted users
-    up = ndb.IntegerProperty(default=0)
-    down = ndb.IntegerProperty(default=0)
-    vote = ndb.ComputedProperty(lambda self: self.up - self.down)
-
     

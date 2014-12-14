@@ -1,7 +1,8 @@
 # [START imports]
 import os
 import urllib
-from jane import getLoginTemplateStatus		# custom python script
+from jane import *		# custom python script
+from models import *
 
 from google.appengine.api import users
 from google.appengine.ext import ndb
@@ -16,18 +17,24 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 # [END imports]
 
-# [START main_page]
-class MainPage(webapp2.RequestHandler):
-    def get(self):
-        template_values = getLoginTemplateStatus(self, users)
-        template = JINJA_ENVIRONMENT.get_template('manage.html', parent='layout.html')
-        self.response.write(template.render(template_values))
+def writingToTemplate(self, template_values):
+	template = JINJA_ENVIRONMENT.get_template('list.html', parent='layout.html')
+	self.response.write(template.render(template_values))
+
+# [START manage_page]
+class ManagePage(webapp2.RequestHandler):
+	def get(self):
+		if users.get_current_user():
+			template_values = getQuestionList(self, True)
+			writingToTemplate(self, template_values)
+		else:
+			template_values = getLoginTemplateStatus(self, users)
+			writingToTemplate(self, template_values)
     
-# [END main_page]
+# [END manage_page]
 
 
 application = webapp2.WSGIApplication([
-    ('/', MainPage),
-    ('/manage', MainPage),
+    ('/manage', ManagePage),
     
 ], debug=True)

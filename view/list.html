@@ -4,11 +4,18 @@
     {{ super() }}
 {% endblock %}
 {% block content %}
-	<h1>Questions: <h1>
-	{% for question in questions %}
-	<div class="q1">
-		<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2>	
-    	<p class="description"> {{ question.content }}</p>    
-	</div>
-	{% endfor %} 
+	{% if questions %}
+		<h1>Questions: <h1>
+		{% for question in questions %}
+		<div class="q1">
+			<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2>	
+	    	<p class="description"> {{ question.content | truncate(500, true, '...')}}</p>   
+		</div>
+		{% endfor %}
+		{% if next_curs %}
+		<a href="/list?cursor={{ next_curs }}">More Questions</a>
+		{% endif %}		
+	{% else %}		
+		<p>Please <span class="error">login</span> in order to see your question.</p>
+	{% endif %}
 {% endblock %}

@@ -19,6 +19,9 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 # [END imports]
 
+def redirectToQuestion(self, qid):
+    query_params = {'qid': qid}
+    self.redirect('/view?' + urllib.urlencode(query_params))
 
 # [START view_question]
 class ViewQuestion(webapp2.RequestHandler):
@@ -42,25 +45,41 @@ class ViewQuestion(webapp2.RequestHandler):
 class AnswerQuestion(webapp2.RequestHandler):
     def get(self):
         qid = self.request.get('qid')
-        query_params = {'qid': qid}
-        self.redirect('/view?' + urllib.urlencode(query_params))
+        redirectToQuestion(self, qid)
     def post(self):
         qid = self.request.get('qid')
-        question_key = ndb.Key('Question', int(qid))
-        answer = Answer(parent=question_key)
+        answer = Answer(parent=question_key(qid))
         if users.get_current_user():
             answer.author = users.get_current_user()
         answer.content = self.request.get('content')
 
         answer.put()
         time.sleep(0.1)
-
-        query_params = {'qid': qid}
-        self.redirect('/view?' + urllib.urlencode(query_params))
+      
     
 # [END answer_question]
+
+# [START edit_content]
+class EditContent(webapp2.RequestHandler):
+    def post(self):
+        qid = self.request.get('qid')
+        aid = self.request.get('aid')
+        if aid:
+            answer = answer_key(qid, aid).get()
+            answer.content = self.request.get('content')
+            answer.put()
+            time.sleep(0.1)
+        else:
+            question = question_key(qid).get()
+            question.content = self.request.get('content')
+            question.put()
+            time.sleep(0.1)
+        redirectToQuestion(self, qid)
+
+# [END edit_content]
 
 application = webapp2.WSGIApplication([
     ('/view', ViewQuestion),
     ('/answer', AnswerQuestion),
+    ('/edit', EditContent),
 ], debug=True)
