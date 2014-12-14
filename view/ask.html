@@ -13,7 +13,8 @@
                 event.preventDefault();
                 window.location.href = link;
             } else if ($("input:text").val() == '') { 
-                alert("input cannot be empty");
+                $("div.title").addClass("has-error");
+                $("#questionTitle").text("Cannot be empty")
                 event.preventDefault();
             }
         });
@@ -23,25 +24,21 @@
 {% block content %}
   <h1>Ask a Question</h1>
   <form role="form" action="" method="POST">
-    <div class="form-group">
+    <div class="title form-group has-feedback">
     <label for="exampleInputTitle">Question Title</label>
-    <input type="text" class="form-control" id="exampleInputTitle" name="title" placeholder="Enter question">
+    <input type="text" class="form-control" id="exampleInputTitle" name="title" placeholder="Enter question" aria-describedby="inputError2Status">
+    <span id="questionTitle" class="error"></span>
     </div>
+
     <div class="form-group">
     <label for="exampleInputContent">Content</label>
     <textarea class="form-control" rows="8" name="content" placeholder="Question content"></textarea>
     </div>
-    <div class="form-group">
+
+    <div class="form-group has-feedback">
     <label for="exampleInputFile">Upload pictures</label>
     <input type="file" id="exampleInputFile">
     <p class="help-block">Please upload your picture if applied.</p>
-    </div>
-    
-    <div class="form-group has-warning has-feedback">
-    <label class="control-label" for="inputWarning2">Input with warning</label>
-    <input type="text" class="form-control" id="inputWarning2" aria-describedby="inputWarning2Status">
-    <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
-    <span id="inputWarning2Status" class="sr-only">(warning)</span>
     </div>
     
     <button type="submit" class="btn btn-default" id="submit">Submit</button>

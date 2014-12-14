@@ -19,7 +19,7 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 # [END imports]
 
-pagesize = 2
+pagesize = 10
 
 def getLoginTemplateStatus(self, users):
     if users.get_current_user():

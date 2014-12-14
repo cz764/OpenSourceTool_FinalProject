@@ -4,6 +4,9 @@
     {{ super() }}
 {% endblock %}
 {% block content %}
+	{% if isLogin == 'False' %}
+	<p>Please <span class="error">login</span> in order to see your question.</p>
+	{% else %}
 	{% if questions %}
 		<h1>Questions: <h1>
 		{% for question in questions %}
@@ -14,8 +17,9 @@
 		{% endfor %}
 		{% if next_curs %}
 		<a href="/list?cursor={{ next_curs }}">More Questions</a>
-		{% endif %}		
-	{% else %}		
-		<p>Please <span class="error">login</span> in order to see your question.</p>
+		{% endif %}	
+	{% else %}
+		<h2>Oops...You've not asked question. Please go for ask a question!</h2>
+	{% endif %}
 	{% endif %}
 {% endblock %}
