@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}Ask{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+
+<h2>Wanna upload images?</h2>
+  
+<div class="form-group has-feedback">
+<label for="exampleInputFile">Upload pictures</label>
+<input type="file" id="exampleInputFile">
+<p class="help-block">Please upload your picture if applied.</p>
+</div>
+    
+{% endblock %}

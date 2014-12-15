@@ -24,13 +24,13 @@ handlers:
   script: manage.application
 
 - url: /view?.*
-  script: view.application
+  script: viewQuestion.application
 
 - url: /answer?.*
-  script: view.application
+  script: viewQuestion.application
 
 - url: /edit?.*
-  script: view.application
+  script: viewQuestion.application
 
 - url: /vote/up?.*
   script: vote.application

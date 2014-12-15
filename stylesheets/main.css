@@ -11,7 +11,8 @@ body {
 }
 
 .important { 
-	color: purple; 
+	color: purple;
+	font-weight: bold;
 }
 
 .col-lg-6 {
@@ -44,4 +45,8 @@ body {
 
 .hidden {
 	display: none;
+}
+
+.tags {
+	
 }

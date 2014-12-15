@@ -40,8 +40,10 @@
     	<form action="/vote/down?qid={{ question.key.id() }}" method="POST">
 			<input type="submit" class="btn btn-default" value="Down"></form>
     	</div>
-    	<div class="description">{{ question.content }}</div>
-    	<div class="tags">{% for tag in question.tags %}<label>{{ tag }}</label> {% endfor %}</div>
+    	<div class="description">{{ question.content| replace_html | safe }}</div>
+    	<div class="tags">{% for tag in question.tags %}<li class="tags"><a href="/tag/?tag={{ tag }}">{{ tag }}</a></li> {% endfor %}
+    	</div>
+    	<div class="date"><label>Date:</label> {{ question.date_edit }}</div>
     	{% if user == question.author %}
     		<button id="editQuestion" type="button" class="btn btn-default">
 				I wanna Edit this</button>	
@@ -61,13 +63,13 @@
     	<form action="/vote/down?qid={{ question.key.id() }}&aid={{ answer.key.id() }}" method="POST">
     		<input type="submit" class="btn btn-default" value="Down"></form>
     	</div>
-		<div class="description"><p class="answerContent">{{ answer.content }}</p></div>
-		<p><span>{{ answer.date_edit }}</span></p>
+		<div class="description"><p class="answerContent">{{ answer.content| replace_html | safe }}</p></div>
+		<div class="author date"><label>{{ answer.author }}</label> answered at <label>{{ question.date_edit }} </label></div>
 		{% if user == answer.author %}
 			<button id="{{ answer.key.id() }}" type="button" class="btn btn-default">I wanna Edit this</button>
 			<form action="/edit?qid={{ question.key.id() }}&aid={{ answer.key.id() }}" method="POST" class="hidden">
 			<textarea class="form-control answers" rows="7" name="content">{{ answer.content }}</textarea>
-			<button type="submit" class="btn btn-default">Edit</button>
+			<button type="submit" class="btn btn-default">Submit My Edit</button>
 			</form>
 		{% endif %}
 		<hr>

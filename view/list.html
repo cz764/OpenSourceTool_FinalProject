@@ -7,19 +7,20 @@
 	{% if isLogin == 'False' %}
 	<p>Please <span class="error">login</span> in order to see your question.</p>
 	{% else %}
-	{% if questions %}
-		<h1>Questions: <h1>
-		{% for question in questions %}
-		<div class="q1">
-			<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2>	
-	    	<p class="description"> {{ question.content | truncate(500, true, '...')}}</p>   
-		</div>
-		{% endfor %}
-		{% if next_curs %}
-		<a href="/list?cursor={{ next_curs }}">More Questions</a>
-		{% endif %}	
-	{% else %}
-		<h2>Oops...You've not asked question. Please go for ask a question!</h2>
-	{% endif %}
+		{% if questions %}
+			<h1>{{ tagged }} Questions: <h1>
+			{% for question in questions %}
+			<div class="questions">
+				<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2><p class="description"> {{ question.content | truncate(500, true, '...')}}</p>
+				<div class="tags description">{% for tag in question.tags %}<li class="tags"><a href="/tag/?tag={{ tag }}">{{ tag }}</a></li> {% endfor %}
+    			</div> 
+			</div>
+			{% endfor %}
+			{% if next_curs %}
+			<a href="/list?cursor={{ next_curs }}">More Questions</a>
+			{% endif %}	
+		{% else %}
+			<h2>Oops...You've not asked question. Please go for ask a question!</h2>
+		{% endif %}
 	{% endif %}
 {% endblock %}

@@ -27,3 +27,9 @@ indexes:
   - name: author
   - name: date_edit
     direction: desc
+
+- kind: Question
+  properties:
+  - name: tags
+  - name: date_edit
+    direction: desc

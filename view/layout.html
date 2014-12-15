@@ -54,6 +54,8 @@
         <h3><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h3>  
         <p class="description">{{ question.content | truncate(200, true, '...') }}</p>
         <label>Date:</label> {{ question.date_edit }}
+        <div class="tags">{% for tag in question.tags %}<li class="tags"><a href="/tag/?tag={{ tag }}">{{ tag }}</a></li> {% endfor %}
+        </div> 
         {% endfor %}
       </div>
     </div>

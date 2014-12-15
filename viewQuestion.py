@@ -23,6 +23,7 @@ def redirectToQuestion(self, qid):
     query_params = {'qid': qid}
     self.redirect('/view?' + urllib.urlencode(query_params))
 
+
 # [START view_question]
 class ViewQuestion(webapp2.RequestHandler):
     def get(self):
@@ -55,7 +56,7 @@ class AnswerQuestion(webapp2.RequestHandler):
 
         answer.put()
         time.sleep(0.1)
-      
+        redirectToQuestion(self,qid)
     
 # [END answer_question]
 
