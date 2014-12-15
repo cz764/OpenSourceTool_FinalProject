@@ -33,6 +33,7 @@
 {% block content %}	
 	<div class="question">
 		<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2>
+		<p class="description rss"><a href="/rss?qid={{ question.key.id() }}">[Get RSS Feed]</a></p>
 		<hr>
 		<form action="/vote/up?qid={{ question.key.id() }}" method="POST">
 			<input type="submit" class="btn btn-default" value="Up"></form>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+
+{% autoescape true %}
+<channel>
+
+<title>{{ question.title }}</title>
+<link>http://chenzhuost.appspot.com/view?qid={{ question.key.id() }}</link>
+<description>{{ question.content }} </description>
+<author>{{ question.author }}</author>
+
+{% for answer in answers %}
+<item>
+<title>{{ answer.title }}</title>
+<link>http://chenzhuost.appspot.com/view?qid={{ question.key.id() }}</link>
+<description>{{ answer.content }}</description>
+<author>{{ answer.author }}</author>
+</item>
+{% endfor %}
+
+</channel>
+</rss>
+{% endautoescape %}

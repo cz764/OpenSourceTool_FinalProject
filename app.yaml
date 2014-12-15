@@ -38,6 +38,9 @@ handlers:
 - url: /vote/down?.*
   script: vote.application
 
+- url: /rss?.*
+  script: rss.application
+
 - url: /.*
   script: jane.application
 

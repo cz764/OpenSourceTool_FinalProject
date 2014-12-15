@@ -23,18 +23,20 @@ def redirectToQuestion(self, qid):
     query_params = {'qid': qid}
     self.redirect('/view?' + urllib.urlencode(query_params))
 
+def getQandAs(qid, template_values):
+    question = question_key(qid).get()
+    answers = Answer.query(ancestor=question_key(qid)).order(-Answer.vote).fetch()
+    template_values["question"] = question
+    template_values["answers"] = answers
+    return template_values
 
 # [START view_question]
 class ViewQuestion(webapp2.RequestHandler):
     def get(self):
     	qid = self.request.get('qid')
-    	question_key = ndb.Key('Question', int(qid))
-    	question = question_key.get()
-    	answers = Answer.query(ancestor=question_key).order(-Answer.vote).fetch()
 
         template_values = getLoginTemplateStatus(self, users)
-        template_values["question"] = question
-        template_values["answers"] = answers
+        template_values = getQandAs(qid, template_values)
         template_values["user"] = users.get_current_user()
 
         template = JINJA_ENVIRONMENT.get_template('viewQuestion.html', parent='layout.html')
