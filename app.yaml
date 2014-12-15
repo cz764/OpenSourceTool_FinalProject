@@ -23,6 +23,12 @@ handlers:
 - url: /manage/.*
   script: manage.application
 
+- url: /upload
+  script: manage.application
+
+- url: /img/.*
+  script: manage.application
+
 - url: /view?.*
   script: viewQuestion.application
 
@@ -37,6 +43,8 @@ handlers:
 
 - url: /vote/down?.*
   script: vote.application
+
+
 
 - url: /.*
   script: jane.application
