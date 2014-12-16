@@ -69,18 +69,6 @@ body {
     background-color: orange;
 }
 
-.tags li a {
-    background-color: #B800B8;
-    color: white;
-    padding: 3px 5px;
-    text-decoration: none;
-    border-radius: 4px 4px 0 0;
-}
-
-.tags li a:hover {
-    background-color: orange;
-}
-
 .votes {
 	position: auto;
     left: 0px;
