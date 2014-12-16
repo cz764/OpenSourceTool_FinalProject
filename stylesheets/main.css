@@ -10,6 +10,10 @@ body {
     text-align: center;
 }
 
+.container {
+	max-width: 780px;
+}
+
 .important { 
 	color: #B800B8;
 	font-weight: bold;
@@ -94,4 +98,18 @@ body {
 
 .indent {
 	margin-left: 10%;
+}
+
+img.fixed {
+	width: 400px;
+	height: 300px;
+}
+
+table, td, th {
+    border: none;
+}
+
+td {
+    height: auto;
+    vertical-align: top;
 }
