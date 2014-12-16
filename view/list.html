@@ -1,14 +1,11 @@
 {% extends "layout.html" %}
-{% block title %}Ask{% endblock %}
-{% block head %}
-    {{ super() }}
-{% endblock %}
+{% block title %}List{% endblock %}
 {% block content %}
 	{% if isLogin == 'False' %}
-	<p>Please <span class="error">login</span> in order to see your question.</p>
+	<p>Please <span class="error">login</span> in order to see questions.</p>
 	{% else %}
 		{% if questions %}
-			<h1>{{ tagged }} Questions: <h1>
+			<h1>{{ tagged }} Questions: {% if isManaging %}by {{ user.nickname() }}{% endif %}<h1>
 			{% for question in questions %}
 			<div class="questions">
 				<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2><p class="description"> {{ question.content | truncate(500, true, '...')}}</p>
