@@ -30,5 +30,16 @@ class Answer(ndb.Model):
     downs = ndb.StringProperty(repeated=True, indexed=False)       # stores a list of users who voted down on this question
     vote = ndb.ComputedProperty(lambda self: len(self.ups) - len(self.downs))
 
+class Image(ndb.Model):
+    ifile = ndb.BlobProperty()
+    url = ndb.StringProperty()
+    user = ndb.UserProperty()
+    date = ndb.DateTimeProperty(auto_now_add=True)
+
+    @classmethod
+    def get_author(cls, user):
+        q = Image.query(Image.user == user)
+        q.order(-Image.date)
+        return q.fetch()
 
     

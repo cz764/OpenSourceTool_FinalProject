@@ -1,16 +1,45 @@
 {% extends "layout.html" %}
-{% block title %}Ask{% endblock %}
+{% block title %}Upload{% endblock %}
 {% block head %}
-    {{ super() }}
+	{{ super() }}
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>
+	$(function(){
+		$("#submit").click(function(){
+			var isLogin = $('#isLogin').val()
+			if (isLogin == 'False') {
+				$('form').submit(function(event){
+					alert("Please login!");
+					event.preventDefault();
+				});
+			}
+		});
+	});
+	</script>
 {% endblock %}
 {% block content %}
-
-<h2>Wanna upload images?</h2>
-  
+{% if display_uploader %}
+<h2>Wanna Upload an Image?</h2>
+<form action="/upload" enctype="multipart/form-data" method="post">
 <div class="form-group has-feedback">
 <label for="exampleInputFile">Upload pictures</label>
-<input type="file" id="exampleInputFile">
+<input type="file" id="exampleInputFile" name="img">
 <p class="help-block">Please upload your picture if applied.</p>
+<input type="submit" id="submit" class="btn btn-default" value="upload">
 </div>
-    
+</form>
+
+{% else %}
+<h2 class="error">{{ status }}</h2>
+
+{% endif %}
+<h2>Uploaded Images</h2>
+<ul>
+{% for img in images %}
+<li>{{ "http://chenzhuost.appspot.com/img/" ~ img.url }}
+ | <a href="{{ "/img/" ~ img.url }}">View Image</a>
+ | {{ img.date }}
+ | <a href="{{ "/img/delete/" ~ img.key.id() }}">Delete</a>
+{% endfor %}
+</ul>
 {% endblock %}
