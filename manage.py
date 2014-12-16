@@ -43,6 +43,7 @@ class ManagePage(webapp2.RequestHandler):
 			writingToTemplate(self, template_values, list_html)
 		else:
 			template_values = getLoginTemplateStatus(self, users)
+			template_values["isManaging"] = True
 			writingToTemplate(self, template_values, list_html)
     
 # [END manage_page]
