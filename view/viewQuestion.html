@@ -18,6 +18,19 @@
             }
         });
 
+        $("#answerContent").keyup(function(event){
+        	var content = $("#answerContent").val();
+        	$("#previewAnswer").html(content);
+        });
+
+        $("form.vote").submit(function(event){
+        	var loginStatus = $("#isLogin").val()
+        	if (loginStatus === "False") {
+        		alert("Pleae login");
+        		event.preventDefault();
+        	}
+        });
+
         $("#editQuestion").click(function() {
 			$(this).next("form").removeClass("hidden");
         });
@@ -35,14 +48,14 @@
 		<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2>
 		<p class="description rss"><a href="/rss?qid={{ question.key.id() }}">[Get RSS Feed]</a></p>
 		<hr>
-		<div class="votes inline">
-		<form action="/vote/up?qid={{ question.key.id() }}" method="POST">
+		<div class="inline votes">
+		<form action="/vote/up?qid={{ question.key.id() }}" method="POST" class="vote">
 			<input type="submit" class="btn btn-default vbtn" value="Up"></form>
     	<label>{{ question.vote }}</label> 
-    	<form action="/vote/down?qid={{ question.key.id() }}" method="POST">
+    	<form action="/vote/down?qid={{ question.key.id() }}" method="POST" class="vote">
 			<input type="submit" class="btn btn-default vbtn" value="Down"></form>
     	</div>
-    	<div class="description inline">{{ question.content| replace_html | safe }}</div>
+    	<div class="description inline contentWidth">{{ question.content| replace_html | safe }}</div>
     	<div class="tags block indent">{% for tag in question.tags %}<li class="tags"><a href="/tag/?tag={{ tag }}">{{ tag }}</a></li> {% endfor %}
     	</div>
     	<div class="date block indent"><label>Date:</label> {{ question.date_edit }}</div>
@@ -62,11 +75,11 @@
 	<hr>
 	<div class="answers">
 		{% for answer in answers %}
-		<div class="votes inline">
-		<form action="/vote/up?qid={{ question.key.id() }}&aid={{ answer.key.id() }}" method="POST">
+		<div class="inline votes">
+		<form action="/vote/up?qid={{ question.key.id() }}&aid={{ answer.key.id() }}" method="POST" class="vote">
 			<input type="submit" class="btn btn-default vbtn" value="Up"></form>
     	<label>{{ answer.vote }}</label> 
-    	<form action="/vote/down?qid={{ question.key.id() }}&aid={{ answer.key.id() }}" method="POST">
+    	<form action="/vote/down?qid={{ question.key.id() }}&aid={{ answer.key.id() }}" method="POST" class="vote">
     		<input type="submit" class="btn btn-default vbtn" value="Down"></form>
     	</div>
 		<div class="description inline"><p class="answerContent">{{ answer.content| replace_html | safe }}</p></div>
@@ -91,7 +104,7 @@
 	</form>
 	</div>
 	<div class="preview_answer">
-		<p>This is a preview of your answer</p>
+		<p id="previewAnswer">This is a preview of your answer</p>
 	</div>
   
 {% endblock %}

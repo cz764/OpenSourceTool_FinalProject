@@ -1,24 +1,35 @@
 {% extends "layout.html" %}
 {% block title %}List{% endblock %}
 {% block content %}
-	{% if isLogin == 'False' %}
-	<p>Please <span class="error">login</span> in order to see questions.</p>
+
+{% macro displayQuestions() -%}
+{% if questions %}
+	<h1><span class="important">{{ tagged }}</span> Questions: {% if isManaging %}by {{ user.nickname() }}{% endif %}<h1>
+	{% for question in questions %}
+	<div class="questions">
+		<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2><p class="description"> {{ question.content | truncate(500, true, '...')}}</p>
+		<div class="tags description">{% for tag in question.tags %}<li class="tags"><a href="/tag/?tag={{ tag }}">{{ tag }}</a></li> {% endfor %}
+		</div>
+		<div class="date block description"><label>Date:</label> {{ question.date_edit }}</div>
+	</div>
+	{% endfor %}
+	{% if next_curs %}
+	<p class="description"><a href="/list?cursor={{ next_curs }}">Older Questions...</a></p>
+	{% endif %}	
+{% else %}
+	<h2>Oops...You've not asked question. Please go for ask a question!</h2>
+{% endif %}
+{%- endmacro %}
+
+{% if isManaging %}
+	{% if isLogin == 'True' %}
+		{{ displayQuestions() }}	
 	{% else %}
-		{% if questions %}
-			<h1>{{ tagged }} Questions: {% if isManaging %}by {{ user.nickname() }}{% endif %}<h1>
-			{% for question in questions %}
-			<div class="questions">
-				<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2><p class="description"> {{ question.content | truncate(500, true, '...')}}</p>
-				<div class="tags description">{% for tag in question.tags %}<li class="tags"><a href="/tag/?tag={{ tag }}">{{ tag }}</a></li> {% endfor %}
-    			</div>
-    			<div class="date block description"><label>Date:</label> {{ question.date_edit }}</div>
-			</div>
-			{% endfor %}
-			{% if next_curs %}
-			<p class="description"><a href="/list?cursor={{ next_curs }}">Older Questions...</a></p>
-			{% endif %}	
-		{% else %}
-			<h2>Oops...You've not asked question. Please go for ask a question!</h2>
-		{% endif %}
+		<p>Please <span class="error">login</span> to manage your questions.</p>
 	{% endif %}
+{% else %}
+	{{ displayQuestions() }}
+{% endif %}
+	
 {% endblock %}
+有bug，logout之后不能看
