@@ -36,6 +36,8 @@ body {
 .description {
 	font-family: Arial;
 	font-size: 16px;
+	margin: 1px 1px 1px 1px;
+	vertical-align: top;
 }
 
 .error {
@@ -48,5 +50,36 @@ body {
 }
 
 .tags {
-	
+	display: inline;
+
+}
+
+.votes {
+	position: auto;
+    left: 0px;
+    width: 10%;
+    /*background-color: #b0e0e6;*/
+}
+
+.inline {
+	display: inline-block;
+}
+
+.block {
+	display: block;
+}
+
+.date {
+	position: relative;
+	right: 0px;
+}
+
+.vbtn {
+	padding: 0 0 0 0;
+	font-size: 90%;
+	width: 45px;
+}
+
+.indent {
+	margin-left: 10%;
 }

@@ -53,10 +53,10 @@
       <div class="col-lg-6">
         {% for question in questions %}
         <h3><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h3>  
-        <p class="description">{{ question.content | truncate(200, true, '...') }}</p>
-        <label>Date:</label> {{ question.date_edit }}
+        <p class="description">{{ question.content | truncate(200, true, '...') }}</p>       
         <div class="tags">{% for tag in question.tags %}<li class="tags"><a href="/tag/?tag={{ tag }}">{{ tag }}</a></li> {% endfor %}
-        </div> 
+        </div>
+        <div class="date block"><label>Date:</label> {{ question.date_edit }}</div>
         {% endfor %}
       </div>
     </div>
