@@ -6,7 +6,7 @@ from google.appengine.api import users
 from google.appengine.ext import ndb
 
 from models import *        # custom models
-from jane import getLoginTemplateStatus
+from jane import *
 
 import jinja2
 import webapp2
@@ -75,6 +75,7 @@ class EditContent(webapp2.RequestHandler):
         else:
             question = question_key(qid).get()
             question.content = self.request.get('content')
+            question.tags = strip_tags(self.request.get('tags'))
             question.put()
             time.sleep(0.1)
         redirectToQuestion(self, qid)

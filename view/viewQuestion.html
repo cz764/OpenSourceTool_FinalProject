@@ -50,6 +50,10 @@
 				I wanna Edit this</button>	
 			<form action="/edit?qid={{ question.key.id() }}" method="POST" class="hidden">
 			<textarea class="form-control" rows="7" name="content">{{ question.content }}</textarea>
+			<div class="form-group has-feedback">
+    		<p><label for="exampleInputFile">Tags</label> deliminated by <span class="important">comma</span></p>
+    		<input type="text" class="form-control" id="exampleInputFile" name="tags" value="{% for tag in question.tags %}{{ tag }},{% endfor %}">
+    		</div>
 			<button type="submit" class="btn btn-default">Submit My Edit</button>
 			</form>
 		{% endif %}
