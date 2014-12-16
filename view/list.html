@@ -10,7 +10,8 @@
 			<div class="questions">
 				<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2><p class="description"> {{ question.content | truncate(500, true, '...')}}</p>
 				<div class="tags description">{% for tag in question.tags %}<li class="tags"><a href="/tag/?tag={{ tag }}">{{ tag }}</a></li> {% endfor %}
-    			</div> 
+    			</div>
+    			<div class="date block description"><label>Date:</label> {{ question.date_edit }}</div>
 			</div>
 			{% endfor %}
 			{% if next_curs %}
