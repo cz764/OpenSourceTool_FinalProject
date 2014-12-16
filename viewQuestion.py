@@ -12,7 +12,6 @@ import jinja2
 import webapp2
 import time
 
-
 JINJA_ENVIRONMENT = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(os.path.abspath(__file__)) + '/view/'),
     extensions=['jinja2.ext.autoescape'],

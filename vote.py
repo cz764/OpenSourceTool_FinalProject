@@ -5,17 +5,12 @@ from google.appengine.api import users
 from google.appengine.ext import ndb
 
 from models import *        # custom models
-from jane import getLoginTemplateStatus
+from jane import *
 
 import jinja2
 import webapp2
 import time
 
-
-JINJA_ENVIRONMENT = jinja2.Environment(
-    loader=jinja2.FileSystemLoader(os.path.dirname(os.path.abspath(__file__)) + '/view/'),
-    extensions=['jinja2.ext.autoescape'],
-    autoescape=True)
 # [END imports]
 
 # [START vote_up]

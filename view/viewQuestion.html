@@ -44,10 +44,12 @@
     </script>
 {% endblock %}
 {% block content %}	
-	<div class="question">
-		<h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2>
-		<p class="description rss"><a href="/rss?qid={{ question.key.id() }}">[Get RSS Feed]</a></p>
-		<hr>
+<div class="question">
+	<table style="width:100%; border-collapse: collapse;">
+	<tr><h2><a href="/view?qid={{ question.key.id() }}">{{ question.title }}</a></h2>
+		<hr></tr>
+		<tr>
+		<td style="width:8%;">
 		<div class="inline votes">
 		<form action="/vote/up?qid={{ question.key.id() }}" method="POST" class="vote">
 			<input type="submit" class="btn btn-default vbtn" value="Up"></form>
@@ -55,12 +57,16 @@
     	<form action="/vote/down?qid={{ question.key.id() }}" method="POST" class="vote">
 			<input type="submit" class="btn btn-default vbtn" value="Down"></form>
     	</div>
-    	<div class="description inline contentWidth">{{ question.content| replace_html | safe }}</div>
-    	<div class="tags block indent">{% for tag in question.tags %}<li class="tags"><a href="/tag/?tag={{ tag }}">{{ tag }}</a></li> {% endfor %}
-    	</div>
-    	<div class="date block indent"><label>Date:</label> {{ question.date_edit }}</div>
-    	{% if user == question.author %}
-    		<button id="editQuestion" type="button" class="btn btn-default indent">
+		</td>
+		<td>
+			<table style="width:100%;">
+				<tr><td><div class="description inline contentWidth">{{ question.content| replace_html | safe }}</div></td></tr>
+				<tr><td><div class="tags block">{% for tag in question.tags %}<li class="tags"><a href="/tag/?tag={{ tag }}">{{ tag }}</a></li> {% endfor %}
+    		</div></td></tr>
+				<tr><td><div class="date block"><label>Date:</label> {{ question.date_edit }}</div></td></tr>
+				{% if user == question.author %}
+				<tr><td>
+    	<button id="editQuestion" type="button" class="btn btn-default">
 				I wanna Edit this</button>	
 			<form action="/edit?qid={{ question.key.id() }}" method="POST" class="hidden">
 			<textarea class="form-control" rows="7" name="content">{{ question.content }}</textarea>
@@ -70,30 +76,46 @@
     		</div>
 			<button type="submit" class="btn btn-default">Submit My Edit</button>
 			</form>
-		{% endif %}
+			</td></tr>		
+			{% endif %}			
+			</table>
+		</td>
+	</tr>
+	</table>
 	</div>
 	<hr>
+
 	<div class="answers">
-		{% for answer in answers %}
-		<div class="inline votes">
-		<form action="/vote/up?qid={{ question.key.id() }}&aid={{ answer.key.id() }}" method="POST" class="vote">
+	{% for answer in answers %}
+	<table style="width:100%;">
+		<tr>
+			<td style="width:8%;">
+			<div class="inline votes">
+			<form action="/vote/up?qid={{ question.key.id() }}&aid={{ answer.key.id() }}" method="POST" class="vote">
 			<input type="submit" class="btn btn-default vbtn" value="Up"></form>
     	<label>{{ answer.vote }}</label> 
     	<form action="/vote/down?qid={{ question.key.id() }}&aid={{ answer.key.id() }}" method="POST" class="vote">
     		<input type="submit" class="btn btn-default vbtn" value="Down"></form>
-    	</div>
-		<div class="description inline"><p class="answerContent">{{ answer.content| replace_html | safe }}</p></div>
-		<div class="author date indent"><label>{{ answer.author }}</label> answered at <label>{{ question.date_edit }} </label></div>
-		{% if user == answer.author %}
-			<button id="{{ answer.key.id() }}" type="button" class="btn btn-default indent">I wanna Edit this</button>
-			<form action="/edit?qid={{ question.key.id() }}&aid={{ answer.key.id() }}" method="POST" class="hidden">
-			<textarea class="form-control answers" rows="7" name="content">{{ answer.content }}</textarea>
-			<button type="submit" class="btn btn-default">Submit My Edit</button>
-			</form>
-		{% endif %}
-		<hr>
-		{% endfor %}
+    	</div></td>
+			<td>
+				<table style="width:100%;">
+					<tr><td><div class="description"><p class="answerContent">{{ answer.content| replace_html | safe }}</p></div></td></tr>
+					<tr><td><div class="author date"><label>{{ answer.author }}</label> answered at <label>{{ question.date_edit }} </label></div></td></tr>
+					{% if user == answer.author %}
+					<tr><td><button id="{{ answer.key.id() }}" type="button" class="btn btn-default">I wanna Edit this</button>
+					<form action="/edit?qid={{ question.key.id() }}&aid={{ answer.key.id() }}" method="POST" class="hidden">
+					<textarea class="form-control answers" rows="7" name="content">{{ answer.content }}</textarea>
+					<button type="submit" class="btn btn-default">Submit My Edit</button>
+					</form></td></tr>
+					{% endif %}
+				</table>
+			</td>
+		</tr>
+	</table>
+	<hr>
+	{% endfor %}
 	</div>
+
 	<div class="add_answer">
 	<h3>Your Answer</h3>
 	<form id="postAnswer" action="/answer?qid={{ question.key.id() }}" method="POST">
