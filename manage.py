@@ -1,6 +1,7 @@
 # [START imports]
 import os
 import urllib
+import time
 from jane import *		# custom python script
 from models import *
 
@@ -18,9 +19,19 @@ JINJA_ENVIRONMENT = jinja2.Environment(
     autoescape=True)
 # [END imports]
 
-def writingToTemplate(self, template_values):
-	template = JINJA_ENVIRONMENT.get_template('list.html', parent='layout.html')
+list_html = 'list.html'
+upload_html = 'upload.html'
+
+def writingToTemplate(self, template_values, temp):
+	template = JINJA_ENVIRONMENT.get_template(temp, parent='layout.html')
 	self.response.write(template.render(template_values))
+
+def getImgTemplateValue(self):
+	template_values = getLoginTemplateStatus(self, users)
+	user = users.get_current_user()
+	images = Image.get_author(user)
+	template_values["images"] = images
+	return template_values
 
 # [START manage_page]
 class ManagePage(webapp2.RequestHandler):
@@ -29,10 +40,10 @@ class ManagePage(webapp2.RequestHandler):
 			template_values = getQuestionList(self, True)
 			template_values["isManaging"] = True
 			template_values["user"] = users.get_current_user()
-			writingToTemplate(self, template_values)
+			writingToTemplate(self, template_values, list_html)
 		else:
 			template_values = getLoginTemplateStatus(self, users)
-			writingToTemplate(self, template_values)
+			writingToTemplate(self, template_values, list_html)
     
 # [END manage_page]
 
@@ -42,20 +53,14 @@ class ImageHandler(webapp2.RequestHandler):
 		if picture.ifile:
 			self.response.headers['Content-Type'] = 'image/png'
 			self.response.out.write(picture.ifile)
-		# self.response.headers['Content-Type'] = 'text/plain'
-		# self.response.write("in ImageHandler")
-
+		
 class Uploader(webapp2.RequestHandler):
 	def get(self):
-		template_values = {}
-		template_values["display_uploader"] = True
-		user = users.get_current_user()
-		images = Image.get_author(user)
-		template_values["images"] = images
-		template = JINJA_ENVIRONMENT.get_template('upload.html')
-		self.response.write(template.render(template_values))	
+		template_values = getImgTemplateValue(self)
+		template_values["display_uploader"] = True	
+		writingToTemplate(self, template_values, upload_html)
 	def post(self):
-		status = {}
+		template_values = {}
 		if users.get_current_user():
 			img = self.request.get('img')
 			image = Image()
@@ -65,16 +70,15 @@ class Uploader(webapp2.RequestHandler):
 			image = Image.get_by_id(image_key.id())
 			image.url = str(image_key.id())+"_"+self.request.params['img'].filename
 			image.put()
-			status["status"] = "Success!"
+			time.sleep(0.1)
+			template_values = getImgTemplateValue(self)
+			template_values["status"] = "Success!"
 		else:
-			status["status"] = "Failed:("
-		status["display_uploader"] = False
-
-		user = users.get_current_user()
-		images = Image.get_author(user)
-		status["images"] = images
-		template = JINJA_ENVIRONMENT.get_template('upload.html')
-		self.response.write(template.render(status))
+			template_values = getLoginTemplateStatus(self, users)
+			template_values["status"] = "Failed:( You're not logged in yet!"
+		template_values["display_uploader"] = False
+		
+		writingToTemplate(self, template_values, upload_html)
 	
 
 class DeleteImage(webapp2.RequestHandler):
@@ -84,11 +88,15 @@ class DeleteImage(webapp2.RequestHandler):
 			user = users.get_current_user()
 			if img.user == user:
 				img.key.delete()
-			self.response.write('<p class="main"><b>Success!</b></p>')
+			template_values = getImgTemplateValue(self)
+			template_values["status"] = "Success!"
+			template_values["display_uploader"] = False
+			writingToTemplate(self, template_values, upload_html)
 		else:
-			self.response.write('''<p class="main">You don't have permission!</p>''')
-		# self.response.headers['Content-Type'] = 'text/plain'
-		# self.response.write("in DeleteImage")
+			template_values = getLoginTemplateStatus(self)
+			template_values["status"] = "Failed:( You don't have permission!"
+			template_values["display_uploader"] = False
+			writingToTemplate(self, template_values, upload_html)
 	
 
 
