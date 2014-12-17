@@ -4,11 +4,11 @@ This repository serves for the final project of Open Source Tool course. The pro
 This project is deployed here at <a href="http://chenzhuost.appspot.com/" target="_blank">here</a>
 
 ===========================
-The OST Forum website have following features:
+The OST Forum website have following features, besides user login:
 <ul>
-<li>Display question list</li>
+<li>Display question list: Navigate through Question List button at home page</li>
 <li>Ask new question</li>
-<li>Vote up or down question or answers</li>
+<li>Vote up or down question or answers: Each user can only vote up or down once</li>
 <li>Manage user's question: Need to login. Allows view and edit</li>
 <li>Upload Images: Images would be stored in Google App Engine data store</li>
 <li>Image and hyperlink inline display</li>
