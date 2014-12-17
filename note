@@ -1,10 +1,5 @@
 deployed:
 western-octagon-780.appspot.com
 
-vangie's
-https://github.com/valsharea/thesmallthings/tree/master/OST_blog
-http://vds229-ost.appspot.com/
-
-
 vagrant forwarding port running test:
 ~/google_appengine/dev_appserver.py --port=8080 --host=0.0.0.0  OpenSourceTool_FinalProject/
