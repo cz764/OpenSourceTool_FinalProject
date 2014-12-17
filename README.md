@@ -14,3 +14,7 @@ The OST Forum website have following features:
 <li>Image and hyperlink inline display</li>
 <li>RSS Feed: Turned off in branch experiments</li>
 </ul>
+===========================
+The repository have two working branches: master and experiments. The withoutrss is deprecated branch that only have partial features, I would remove it in the future.
+The master branch has full features.
+The experiments branch has all features except for RSS Feed.
